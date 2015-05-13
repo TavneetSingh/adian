@@ -174,9 +174,33 @@ void Adian_Data_Source_list::add_data_source(int uid, nsaddr_t source, double ex
 
 void Adian_Data_Source_list::rm_data_source(int uid){
 	sl_erase(uid);
+        el_erase(uid);
 }
 
 
 double  Adian_Data_Source_list::expire_time(u_int32_t expire){
 	return( CURRENT_TIME+expire);
 }
+
+
+
+//-----------------------------Reply Route List--------------------------------//
+Adian_Reply_Route_list::Adian_Reply_Route_list() {}
+
+void Adian_Reply_Route_list::add_reply_route(u_int32_t seq_num_, nsaddr_t reply_to, double expire){
+	rl_ newpath;
+	newpath.reply_to = reply_to;
+	newpath.expire=expire;
+}
+
+
+void Adian_Reply_Route_list::rm_reply_route(u_int32_t){
+	rl_erase(seq_num_);
+	el_erase(seq_num_);
+}
+
+
+double Adian_Reply_Route_list::expire_time(u_int32_t expire){
+	return(CURRENT_TIME+expire);
+}
+
