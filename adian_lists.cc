@@ -147,3 +147,36 @@ double Adian_Attempt_list::expire_time(u_int32_t e_time){
 	return(e_time);
 }
 	
+
+
+//.....................Data Source List................................
+
+Adian_Data_Source_list::Adian_Data_Source_list() {}
+
+void Adian_Data_Source_list::add_data_source(int uid, nsaddr_t source, double expire){
+	sl_ newpath;
+	newpath.source = source;
+	//newpath.daddr = daddr;
+	//check if data source exists.
+	src_list_t_t::iterator it = sl_.find(uid);
+
+	if(it == sl_.end()) {
+		// Entry does not exists
+		add_data_source(uid, newpath, CURRENT_TIME+FAILED_PATH_EXPIRE_TIME);
+	}
+	else {
+		// Entry corrosponding to uid exists
+		// push the path to the list of failed paths
+		sl_[uid].push_back(newpath);
+	}
+}
+
+
+void Adian_Data_Source_list::rm_data_source(int uid){
+	sl_erase(uid);
+}
+
+
+double  Adian_Data_Source_list::expire_time(u_int32_t expire){
+	return( CURRENT_TIME+expire);
+}
